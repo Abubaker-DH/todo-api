@@ -11,7 +11,13 @@ router.get("/", async (req, res) => {
 
 // Get One TODO route
 router.get("/:id", async (req, res) => {
-  res.send("Get one TODO by ID");
+  // get the todo
+  const todo = await Todo.findById(req.params.id);
+
+  if (!todo)
+    return res.status(404).send("The todo with the given ID was not found.");
+
+  res.send(book);
 });
 
 // Crate new TODO route
