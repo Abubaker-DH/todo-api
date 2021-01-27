@@ -24,24 +24,26 @@ router.post("/", async (req, res) => {
 
 // Update TODO route
 router.put("/:id", async (req, res) => {
-  let todo;
   // find todo by id and update then send back the NEW one
-  try {
-    todo = await Todo.findByIdAndUdate(
-      req.params.id,
-      { title: req.body.title },
-      { new: true }
-    );
-  } catch (error) {
-    return res.status(400).send("couid not find a todo.");
-  }
+  const todo = await Todo.findByIdAndUdate(
+    req.params.id,
+    { title: req.body.title },
+    { new: true }
+  );
+  if (!todo)
+    return res.status(400).send("The todo with the given ID was not found.");
 
   res.send(todo);
 });
 
 // Delete TODO route
 router.delete("/:id", async (req, res) => {
-  res.send("Delete one TODO by ID");
+  const todo = await Todo.findByIdAndRemove(req.params.id);
+
+  if (!todo)
+    return res.status(404).send("The todo with the given ID was not found.");
+
+  res.send(book);
 });
 
 module.exports = router;
