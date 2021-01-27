@@ -4,7 +4,9 @@ const router = express.Router();
 
 // Get All TODO route
 router.get("/", async (req, res) => {
-  res.send("Get all TODOs");
+  // excloude __v from doc
+  const todos = await Todo.find().select("-__v");
+  res.send(todos);
 });
 
 // Get One TODO route
