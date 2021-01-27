@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const winston = require("winston");
 
 module.exports = () => {
   mongoose
@@ -8,8 +9,8 @@ module.exports = () => {
       useUnifiedTopology: true,
       useFindAndModify: true,
     })
-    .then(() => console.log("Connected to MongoDB..."))
+    .then(() => winston.info("Connected to MongoDB..."))
     .catch((err) => {
-      console.log(err, "Connecting to BD faild ...");
+      winston.info(err, "Connecting to BD faild ...");
     });
 };
