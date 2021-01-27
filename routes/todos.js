@@ -24,7 +24,19 @@ router.post("/", async (req, res) => {
 
 // Update TODO route
 router.put("/:id", async (req, res) => {
-  res.send("Update one TODO by ID");
+  let todo;
+  // find todo by id and update then send back the NEW one
+  try {
+    todo = await Todo.findByIdAndUdate(
+      req.params.id,
+      { title: req.body.title },
+      { new: true }
+    );
+  } catch (error) {
+    return res.status(400).send("couid not find a todo.");
+  }
+
+  res.send(todo);
 });
 
 // Delete TODO route
