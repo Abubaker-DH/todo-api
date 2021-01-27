@@ -1,5 +1,5 @@
 const express = require("express");
-const Todo = require("../models/todo");
+const { Todo, validateTodo } = require("../models/todo");
 const router = express.Router();
 
 // Get All TODO route
@@ -22,6 +22,9 @@ router.get("/:id", async (req, res) => {
 
 // Crate new TODO route
 router.post("/", async (req, res) => {
+  const { error } = validateTodo(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
   // create todo
   const todo = new Todo({ title: req.body.title });
   await todo.save();
@@ -30,6 +33,9 @@ router.post("/", async (req, res) => {
 
 // Update TODO route
 router.put("/:id", async (req, res) => {
+  const { error } = validateTodo(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
   // find todo by id and update then send back the NEW one
   const todo = await Todo.findByIdAndUdate(
     req.params.id,

@@ -21,3 +21,4 @@ function validateTodo(todo) {
 }
 
 module.exports.Todo = mongoose.model("Todo", todoSchema);
+module.exports.validateTodo = validateTodo;
