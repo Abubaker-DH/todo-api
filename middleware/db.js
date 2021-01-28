@@ -9,8 +9,5 @@ module.exports = () => {
       useUnifiedTopology: true,
       useFindAndModify: true,
     })
-    .then(() => winston.info("Connected to MongoDB..."))
-    .catch((err) => {
-      winston.info(err, "Connecting to BD faild ...");
-    });
+    .then(() => winston.info("Connected to MongoDB..."));
 };
